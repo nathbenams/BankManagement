@@ -21,12 +21,12 @@ class ListAccount
 public:
     ListAccount();
     ~ListAccount();
-    void addAccount(int id,int password,int balance);
+    int addAccount(int id,int password,int balance);
     Account findAccount(int id);
     unsigned long sizeList();
     Account getAccount(int i);
 private:
-    vector<Account> listOfAccount;
-    Protection readerWriter;
+    vector<Account*> listOfAccount;
+    Protection ReaderWriter;
 };
 #endif /* listAccount_hpp */
