@@ -10,5 +10,16 @@
 #define Caspomat_hpp
 
 #include <stdio.h>
+#include <iostream>
 
+class Caspomat
+{
+public:
+    Caspomat(int id,char* nameFile);
+    ~Caspomat();
+private:
+    int caspomatID;
+    FILE* caspomatFile;
+    bool fileOpened;
+};
 #endif /* Caspomat_hpp */

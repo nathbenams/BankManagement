@@ -10,5 +10,18 @@
 #define Account_hpp
 
 #include <stdio.h>
+#include "Protection.hpp"
+
+class Account
+{
+public:
+    
+    
+private:
+    int accountID;
+    int accountPassword;
+    int accountBalance;
+    Protection accountReaderWriter;
+};
 
 #endif /* Account_hpp */
