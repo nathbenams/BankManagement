@@ -25,6 +25,10 @@ public:
     Account* findAccount(int id);
     unsigned long sizeList();
     Account* getAccount(int i);
+    void readLockAccount();
+    void readUnlockAccount();
+    void writeLockAccount();
+    void writeUnlockAccount();
 private:
     vector<Account*> listOfAccount;
     Protection ReaderWriter;

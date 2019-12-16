@@ -39,7 +39,7 @@ int ListAccount:: addAccount(int id,int password,int balance){ //returns 0 for s
 	int index=0;
 	for (auto it=listOfAccount.begin(); it < listOfAccount.end(); it++){
 		Account *cur_node=listOfAccount.at(index);
-		if ( (cur_node->accountID) > id){//// the first acoount with a greater id then the new account. this is the right place for the new account
+		if ( (cur_node->getID()) > id || !inserted){//// the first acoount with a greater id then the new account. this is the right place for the new account
 			listOfAccount.insert(it,new_node);
 			inserted=1;
 		}
@@ -64,7 +64,7 @@ Account* ListAccount:: findAccount(int id){ //// searches for an count with acco
 	int index=0;
 	for (auto it=listOfAccount.begin(); it < listOfAccount.end(); it++){
 		Account *cur_node=listOfAccount.at(index);
-		if ( (cur_node->accountID) == id){//// the wanted id is found
+		if ( (cur_node->getID()) == id){//// the wanted id is found
 			//readUnlockAccount(); //unlocks the account  ////  maybe we are doing it from the outside... check....
 			return(cur_node);
 		}
