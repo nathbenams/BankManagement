@@ -15,6 +15,8 @@
 class Account
 {
 public:
+    Account();
+    ~Account();
     
     
 private:

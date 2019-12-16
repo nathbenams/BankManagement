@@ -8,7 +8,7 @@
 
 #include "Caspomat.hpp"
 
-extern vector<Account> listOfAccount;
+//extern vector<Account> listOfAccount;
 
 Caspomat::Caspomat(int id,char* nameFile) : caspomatID(id),caspomatFile(nullptr),fileOpened(false)
 {
