@@ -15,15 +15,17 @@
 class Account
 {
 public:
-    Account();
+    Account(int id, int password, int balance);
     ~Account();
     int getID();
     int getPassword();
     int getBalance();
     bool takeMoney(int amount);
     void addMoney(int amount);
-    void lockAccount();
-    void unlockAccount();
+    void readLockAccount();
+    void readUnlockAccount();
+	void writeLockAccount();
+    void writeUnlockAccount();
     
 private:
     int accountID;
