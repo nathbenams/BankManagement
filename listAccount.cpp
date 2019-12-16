@@ -10,9 +10,6 @@
 
 //*************************************************************************************************************************************************//
 
-ListAccount::	ListAccount(){
-	//// i think vector initializes itself, check about the mutex
-}
 
 
 //*************************************************************************************************************************************************//
@@ -25,9 +22,10 @@ ListAccount::    ~ListAccount(){
 //*************************************************************************************************************************************************//
 
 
-int ListAccount:: addAccount(int id,int password,int balance){ //returns 0 for success , -1 for failure
+int ListAccount:: addAccount(int id,int password,int balance){ //returns 0 for success , (-1) for failure
 	
-	writeLockAccount();////locks the list! ////  maybe we are doing it from the outside... check....
+	//assuming that the lock is from the user
+	//writeLockAccount();////locks the list! ////  maybe we are doing it from the outside... check....
 	
 	if (! findAccount(id)){// this id already exists for aonther account
 		log.txt<< "Error " << id<< ":your transaction failed - account with the same id exists\n"
@@ -52,7 +50,7 @@ int ListAccount:: addAccount(int id,int password,int balance){ //returns 0 for s
 	listOfAccount.insert(listOfAccount.end(),new_node);
 	}
 	
-	writeUnlockAccount(); //// unlocks the list  ////  maybe we are doing it from the outside... check....
+	//writeUnlockAccount(); //// unlocks the list  ////  maybe we are doing it from the outside... check....
 	return 0;
 }
 
@@ -61,16 +59,18 @@ int ListAccount:: addAccount(int id,int password,int balance){ //returns 0 for s
 
 
 Account* ListAccount:: findAccount(int id){ //// searches for an count with accountID == id, returns a pointer to the account if found or NULL else
-	readLockAccount(); //// locks the list , reads  ////  maybe we are doing it from the outside... check....
+	//assuming that th look is from outside
+	//readLockAccount(); //// locks the list , reads  ////  maybe we are doing it from the outside... check....
 	int index=0;
 	for (auto it=listOfAccount.begin(); it < listOfAccount.end(); it++){
 		Account *cur_node=listOfAccount.at(index);
 		if ( (cur_node->accountID) == id){//// the wanted id is found
-			readUnlockAccount(); //unlocks the account  ////  maybe we are doing it from the outside... check....
+			//readUnlockAccount(); //unlocks the account  ////  maybe we are doing it from the outside... check....
 			return(cur_node);
 		}
 		index++;
 	}
+	//readUnlockAccount(); 
 	return NULL; //// if we are here, than the account was not found!
 }
 
@@ -83,7 +83,7 @@ unsigned long ListAccount::sizeList(){
 
 
 
-Account* ListAccount:: getAccount(int i){ ///returns a pointer to list number i or null if i is greater or equal to the list's size
+Account* ListAccount:: getAccount(int i){ ////returns a pointer to list number i or null if i is greater or equal to the list's size
 	if (i >= listOfAccount.size()) //// boundry check, ( i put " >= " instead of " > " after checking the internet....
 		return NULL;
 	else 

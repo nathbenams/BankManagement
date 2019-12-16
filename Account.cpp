@@ -15,7 +15,8 @@ Account:: Account(int id, int password, int balance){////// i assume that all th
 		///// do i need to initiaize the lock to be open??
 }
 
-
+////// we assume that lock and unlock are done from outside the module!!! ////
+//////////////////////////////////////////////////////////////////////////////////
 Account:: ~Account(){
 	while(pthread_mutex_destroy(&accountReaderWriter));///// if this function success, it returns 0 then i put it in a while 
 }
@@ -45,15 +46,15 @@ void Account:: addMoney(int amount){////// assumes that amount is not negitive
 }
 
 void Account::readLockAccount(){
-	accountReaderWriter.enterReader;
+	accountReaderWriter.enterReader();
 }
 void Account::readUnlockAccount(){
-	accountReaderWriter.leaveReader;
+	accountReaderWriter.leaveReader();
 }
 void Account::writeLockAccount(){
-	accountReaderWriter.enterWriter;
+	accountReaderWriter.enterWriter();
 }
 
 void Account::writeUnlockAccount(){
-	accountReaderWriter.leaveWriter;
+	accountReaderWriter.leaveWriter();
 }
