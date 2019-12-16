@@ -17,7 +17,13 @@ class Account
 public:
     Account();
     ~Account();
-    
+    int getID();
+    int getPassword();
+    int getBalance();
+    bool takeMoney(int amount);
+    void addMoney(int amount);
+    void lockAccount();
+    void unlockAccount();
     
 private:
     int accountID;
