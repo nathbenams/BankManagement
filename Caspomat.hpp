@@ -10,10 +10,14 @@
 #define Caspomat_hpp
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <iostream>
 #include <vector>
+#include <string.h>
+#include <unistd.h>
 using namespace std;
 #include "Account.hpp"
+#include "listAccount.hpp"
 #define MAX_LINE_SIZE 50
 #define MAX_ARG 5
 

@@ -29,7 +29,7 @@ void* bankPrint(void *arg){
         for(unsigned long i=0;i<listOfAccount.sizeList();i++){
             printf("Account %d: Balance – %d $ , Account Password – %d\n",listOfAccount.getAccount(i)->getID(),listOfAccount.getAccount(i)->getBalance(),listOfAccount.getAccount(i)->getPassword());
         }
-//        printf("The Bank has %d $",............) TO FILL
+        printf("The Bank has %d $",bankAccount->getBalance());
         
         for(unsigned long i=0;i<listOfAccount.sizeList();i++){
             listOfAccount.getAccount(i)->readUnlockAccount();
