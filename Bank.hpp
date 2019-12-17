@@ -10,5 +10,11 @@
 #define Bank_hpp
 
 #include <stdio.h>
+#include <unistd.h>
+#include "listAccount.hpp"
+#include "Account.hpp"
+#define HALFSECOND 500000
+
+void* bankPrint(void* arg);
 
 #endif /* Bank_hpp */

@@ -24,7 +24,7 @@ public:
     int addAccount(int id,int password,int balance);
     Account* findAccount(int id);
     unsigned long sizeList();
-    Account* getAccount(int i);
+    Account* getAccount(unsigned long i);
     void readLockAccount();
     void readUnlockAccount();
     void writeLockAccount();

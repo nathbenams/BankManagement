@@ -12,7 +12,8 @@ Account:: Account(int id, int password, int balance){////// i assume that all th
 	accountID = id;
     accountPassword = password;
     accountBalance = balance;
-    ///// do i need to initiaize the lock to be open?? 
+    accountReaderWriter = Protection();
+    ///// do i need to initiaize the lock to be open??YES
 }
 
 ////// we assume that lock and unlock are done from outside the module!!! ////

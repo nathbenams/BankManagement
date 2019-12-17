@@ -83,7 +83,7 @@ unsigned long ListAccount::sizeList(){
 
 
 
-Account* ListAccount:: getAccount(int i){ ////returns a pointer to list number i or null if i is greater or equal to the list's size
+Account* ListAccount:: getAccount(unsigned long i){ ////returns a pointer to list number i or null if i is greater or equal to the list's size
 	if (i >= listOfAccount.size()) //// boundry check, ( i put " >= " instead of " > " after checking the internet....
 		return NULL;
 	else 

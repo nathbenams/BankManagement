@@ -11,13 +11,17 @@
 #include <vector>
 using namespace std;
 #include "Bank.hpp"
+#include "Caspomat.hpp"
+#include "Account.hpp"
+#include "listAccount.hpp"
 
 FILE* log;
-vector<account> listOfAccount;
+ListAccount listOfAccount;
+bool active;
 
 int main(int argc, const char * argv[]) {
     
-    listOfAccount.clear();
+    listOfAccount = ListAccount();
     
     log=fopen("log.txt","w");
     if(log==nullptr){
@@ -28,9 +32,10 @@ int main(int argc, const char * argv[]) {
     pthread_t bankStatus,bankCommission;
     //Create the fonction of bankstatus and bankcommission in bank.cpp
     //and add pthread_create for them
+    pthread_create(&bankStatus, NULL,  *(*bankPrint), NULL);
     
     int numberOfCaspomat = atoi(argv[1]);
-    vector<*caspomat> listOfCaspomat;
+    vector<Caspomat> listOfCaspomat;
     vector<pthread_t> listOfThreadCaspomat;
     
     for(int i=0; i<numberOfCaspomat;i++){
