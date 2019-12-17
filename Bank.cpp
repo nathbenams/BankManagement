@@ -11,6 +11,8 @@
 
 extern bool active;
 extern ListAccount listOfAccount;
+extern Account* bankAccount;
+extern FILE* log;
 
 void* bankPrint(void *arg){
     
@@ -35,6 +37,46 @@ void* bankPrint(void *arg){
         listOfAccount.readUnlockAccount();
         
 
+    }
+    
+    
+    return NULL;
+}
+
+void* bankCommission(void* arg){
+    
+    while (active) {
+        
+        sleep(3);
+        int commission = rand()%INTERVAL + INTERVAL;
+        listOfAccount.readLockAccount();
+        for(unsigned long i=0;i<listOfAccount.sizeList();i++){
+            listOfAccount.getAccount(i)->writeLockAccount();
+        }
+        int commissionAccount;
+        Account* accountTmp;
+        for(unsigned long i=0;i<listOfAccount.sizeList();i++){
+            
+            accountTmp = listOfAccount.getAccount(i);
+            
+            commissionAccount = (int)(accountTmp->getBalance() *(commission/100));
+            
+            bankAccount->writeLockAccount();
+            
+            bankAccount->addMoney(commissionAccount);
+            accountTmp->takeMoney(commissionAccount);
+            
+            fprintf(log, "Bank: commissions of %d%% were charged, the bank gained %d $ from account %d\n"
+            , commission, commissionAccount, accountTmp->getID());
+            
+            bankAccount->writeUnlockAccount();
+            accountTmp->writeUnlockAccount();
+            
+        }
+        
+        listOfAccount.readUnlockAccount();
+        
+        
     }
     
     

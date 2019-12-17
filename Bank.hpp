@@ -14,7 +14,8 @@
 #include "listAccount.hpp"
 #include "Account.hpp"
 #define HALFSECOND 500000
+#define INTERVAL 2
 
 void* bankPrint(void* arg);
-
+void* bankCommission(void* arg);
 #endif /* Bank_hpp */

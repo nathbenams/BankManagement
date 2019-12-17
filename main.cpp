@@ -14,14 +14,18 @@ using namespace std;
 #include "Caspomat.hpp"
 #include "Account.hpp"
 #include "listAccount.hpp"
+#define BANK 0000
 
 FILE* log;
 ListAccount listOfAccount;
 bool active;
+Account* bankAccount;
 
 int main(int argc, const char * argv[]) {
     
     listOfAccount = ListAccount();
+    Account _bankAccount = Account(BANK,BANK,0);
+    bankAccount = &_bankAccount;
     
     log=fopen("log.txt","w");
     if(log==nullptr){
@@ -29,10 +33,10 @@ int main(int argc, const char * argv[]) {
         exit(1);
     }
     
-    pthread_t bankStatus,bankCommission;
-    //Create the fonction of bankstatus and bankcommission in bank.cpp
-    //and add pthread_create for them
+    pthread_t bankStatus,bankTakeCommission;
+    
     pthread_create(&bankStatus, NULL,  *(*bankPrint), NULL);
+    pthread_create(&bankTakeCommission, NULL, *(*bankCommission),NULL);
     
     int numberOfCaspomat = atoi(argv[1]);
     vector<Caspomat> listOfCaspomat;
