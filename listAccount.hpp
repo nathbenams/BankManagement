@@ -21,7 +21,7 @@ class ListAccount
 public:
    //// ListAccount(); //i think that vector initializes itself, and "protection" has a no parameter builder so the default builder is enough
     ~ListAccount();
-    int addAccount(int id,int password,int balance);
+    int addAccount(int id,char* password,int balance);
     Account* findAccount(int id);
     unsigned long sizeList();
     Account* getAccount(unsigned long i);

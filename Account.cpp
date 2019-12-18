@@ -8,7 +8,7 @@
 
 #include "Account.hpp"
 
-Account:: Account(int id, int password, int balance){////// i assume that all the validation of the input was done before calling this function
+Account:: Account(int id, char* password, int balance){////// i assume that all the validation of the input was done before calling this function
 	accountID = id;
     accountPassword = password;
     accountBalance = balance;
@@ -27,7 +27,7 @@ int Account:: getID(){
 }
 
 
-int Account:: getPassword(){
+char* Account:: getPassword(){
 	return(accountPassword);
 }
 

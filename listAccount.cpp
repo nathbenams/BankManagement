@@ -22,13 +22,13 @@ ListAccount::    ~ListAccount(){
 //*************************************************************************************************************************************************//
 
 
-int ListAccount:: addAccount(int id,int password,int balance){ //returns 0 for success , (-1) for failure
+int ListAccount:: addAccount(int id,char* password,int balance){ //returns 0 for success , (-1) for failure
 	
 	//assuming that the lock is from the user
 	//writeLockAccount();////locks the list! ////  maybe we are doing it from the outside... check....
 	
 	if (! findAccount(id)){// this id already exists for aonther account
-		log.txt<< "Error " << id<< ":your transaction failed - account with the same id exists\n"
+		
 		return (-1);
 	}
 	if (balance<0){// invalid balance

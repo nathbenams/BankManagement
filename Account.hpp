@@ -15,10 +15,10 @@
 class Account
 {
 public:
-    Account(int id, int password, int balance);
+    Account(int id, char* password, int balance);
     ~Account();
     int getID();
-    int getPassword();
+    char* getPassword();
     int getBalance();
     bool takeMoney(int amount);
     void addMoney(int amount);
@@ -29,7 +29,7 @@ public:
     
 private:
     int accountID;
-    int accountPassword;
+    char* accountPassword;
     int accountBalance;
     Protection accountReaderWriter;
 };
