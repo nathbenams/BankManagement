@@ -26,7 +26,7 @@ int main(int argc, const char * argv[]) {
     listOfAccount = ListAccount();
     Account _bankAccount = Account(BANK,BANK,0);
     bankAccount = &_bankAccount;
-    
+    active = true;
     log=fopen("log.txt","w");
     if(log==nullptr){
         perror("");
@@ -39,17 +39,24 @@ int main(int argc, const char * argv[]) {
     pthread_create(&bankTakeCommission, NULL, *(*bankCommission),NULL);
     
     int numberOfCaspomat = atoi(argv[1]);
+    
     vector<Caspomat> listOfCaspomat;
-    vector<pthread_t> listOfThreadCaspomat;
+    pthread_t listThread[numberOfCaspomat];
     
     for(int i=0; i<numberOfCaspomat;i++){
-        // listofcaspomat.pushback(information of him and its file from argv)
-        //pthread_create with its function to execute
+        listOfCaspomat.push_back(Caspomat(i+1,argv[i+2]));
+        pthread_create(&listThread[i],NULL,&Caspomat::execute_helper, &listOfCaspomat.at(i));
+        
     }
     
     for(int i=0;i<numberOfCaspomat;i++){
-        pthread_join(listOfThreadCaspomat.at(i), NULL);
+        pthread_join(listThread[i], NULL);
     }
+    
+    active = false;
+    
+    pthread_join(bankStatus, NULL);
+    pthread_join(bankTakeCommission,NULL);
     
     //pthread_join of the banks
     fclose(log);

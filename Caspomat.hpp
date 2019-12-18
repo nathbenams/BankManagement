@@ -25,12 +25,16 @@ using namespace std;
 class Caspomat
 {
 public:
-    Caspomat(int id,char* nameFile);
+    Caspomat(int id,const char* nameFile);
     ~Caspomat();
-    void executeCommandCaspomat();
+    void* executeCommandCaspomat(void);
+    static void *execute_helper(void *context){
+        return ((Caspomat *)context)->executeCommandCaspomat();
+    }
 private:
     int caspomatID;
     FILE* caspomatFile;
     bool fileOpened;
+    const char* nameFile;
 };
 #endif /* Caspomat_hpp */

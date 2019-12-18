@@ -11,7 +11,7 @@
 extern FILE* log;
 extern ListAccount listOfAccount;
 
-Caspomat::Caspomat(int id,char* nameFile) : caspomatID(id),caspomatFile(nullptr),fileOpened(false)
+Caspomat::Caspomat(int id,const char* _nameFile) : caspomatID(id),caspomatFile(nullptr),fileOpened(false),nameFile(_nameFile)
 {
     caspomatFile= fopen(nameFile,"r");
     if(!caspomatFile){
@@ -28,7 +28,7 @@ Caspomat::~Caspomat()
     }
 }
 
-void Caspomat::executeCommandCaspomat()
+void* Caspomat::executeCommandCaspomat(void)
 {
     char cmd[MAX_LINE_SIZE];
     char* command;
@@ -170,4 +170,5 @@ void Caspomat::executeCommandCaspomat()
             exit(1);
         }
     }
+    return NULL;
 }
