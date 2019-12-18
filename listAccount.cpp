@@ -62,8 +62,9 @@ Account* ListAccount:: findAccount(int id){ //// searches for an count with acco
 	//assuming that th look is from outside
 	//readLockAccount(); //// locks the list , reads  ////  maybe we are doing it from the outside... check....
 	int index=0;
+    Account *cur_node;
 	for (auto it=listOfAccount.begin(); it < listOfAccount.end(); it++){
-		Account *cur_node=listOfAccount.at(index);
+		cur_node=listOfAccount.at(index);
 		if ( (cur_node->getID()) == id){//// the wanted id is found
 			//readUnlockAccount(); //unlocks the account  ////  maybe we are doing it from the outside... check....
 			return(cur_node);

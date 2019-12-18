@@ -70,8 +70,9 @@ void* Caspomat::executeCommandCaspomat(void)
         
         
         else if(!strcmp(command,"D")){
-            
+            listOfAccount.readLockAccount();
             accountTmp = listOfAccount.findAccount(accountID);
+            listOfAccount.readUnlockAccount();
             if (accountTmp == NULL) {
             fprintf(log,"Error %d: Your transaction failed - account id %d does not exist\n",caspomatID, accountID );
             }
@@ -91,7 +92,9 @@ void* Caspomat::executeCommandCaspomat(void)
         
         
         else if(!strcmp(command,"W")){
+            listOfAccount.readLockAccount();
             accountTmp = listOfAccount.findAccount(accountID);
+            listOfAccount.readUnlockAccount();
             if (accountTmp == NULL) {
             fprintf(log,"Error %d: Your transaction failed - account id %d does not exist\n",caspomatID, accountID );
             }
@@ -115,7 +118,9 @@ void* Caspomat::executeCommandCaspomat(void)
         
         
         else if(!strcmp(command,"B")){
+            listOfAccount.readLockAccount();
             accountTmp = listOfAccount.findAccount(accountID);
+            listOfAccount.readUnlockAccount();
             if (accountTmp == NULL) {
             fprintf(log,"Error %d: Your transaction failed - account id %d does not exist\n",caspomatID, accountID );
             }
@@ -135,8 +140,10 @@ void* Caspomat::executeCommandCaspomat(void)
         else if(!strcmp(command,"T")){
             accountReceiverID = atoi(args[2]);
             amount = atoi(args[3]);
+            listOfAccount.readLockAccount();
             accountTmp = listOfAccount.findAccount(accountID);
             accountTmpReceiver = listOfAccount.findAccount(accountReceiverID);
+            listOfAccount.readUnlockAccount();
             if (accountTmp == NULL) {
             fprintf(log,"Error %d: Your transaction failed - account id %d does not exist\n",caspomatID, accountID );
             }
