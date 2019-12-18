@@ -36,14 +36,14 @@ int ListAccount:: addAccount(int id,char* password,int balance){ //returns 0 for
 	}
 	Account* new_node = new Account(id,password,balance);
 	int inserted=0;
-	int index=0;
+    Account* cur_node;
 	for (auto it=listOfAccount.begin(); it < listOfAccount.end(); it++){
-		Account *cur_node=listOfAccount.at(index);
-		if ( (cur_node->getID()) > id || !inserted){//// the first acoount with a greater id then the new account. this is the right place for the new account
+		cur_node= *it;
+		if ( (cur_node->getID()) > id && !inserted){//// the first acoount with a greater id then the new account. this is the right place for the new account
 			listOfAccount.insert(it,new_node);
 			inserted=1;
 		}
-		index++;
+		
 	}
 	
 	if (inserted == 0){////the new acoount has a greater id than all the other accounts. the new acoount should be added in the end of the list
