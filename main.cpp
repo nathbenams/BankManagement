@@ -23,6 +23,11 @@ Account* bankAccount;
 
 int main(int argc, const char * argv[]) {
     
+    if (argc < 3 || atoi(argv[1]) != argc - 2)
+    {
+        printf("illegal arguments\n");
+        exit(0);
+    }
     listOfAccount = ListAccount();
     Account _bankAccount = Account(BANK,BANK,0);
     bankAccount = &_bankAccount;

@@ -14,6 +14,12 @@ Protection::Protection() : writerLock(),readerLock(),readerCount(0)
     readerLock = PTHREAD_MUTEX_INITIALIZER;
 }
 
+Protection::~Protection(){
+    pthread_mutex_destroy(&writerLock);
+    pthread_mutex_destroy(&readerLock);
+    
+}
+
 void Protection::enterReader()
 {
     pthread_mutex_lock(&readerLock);

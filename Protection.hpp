@@ -19,6 +19,7 @@ class Protection
 {
 public:
     Protection();
+    ~Protection();
     void enterReader();
     void enterWriter();
     void leaveReader();
