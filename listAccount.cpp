@@ -37,7 +37,7 @@ int ListAccount:: addAccount(int id,char* password,int balance){ //returns 0 for
 	Account* new_node = new Account(id,password,balance);
 	int inserted=0;
     Account* cur_node;
-	for (auto it=listOfAccount.begin(); it < listOfAccount.end(); it++){
+	for (vector<Account*>::iterator it = listOfAccount.begin(); it < listOfAccount.end(); it++){
 		cur_node= *it;
 		if ( (cur_node->getID()) > id && !inserted){//// the first acoount with a greater id then the new account. this is the right place for the new account
 			listOfAccount.insert(it,new_node);
@@ -63,7 +63,7 @@ Account* ListAccount:: findAccount(int id){ //// searches for an count with acco
 	//readLockAccount(); //// locks the list , reads  ////  maybe we are doing it from the outside... check....
 	int index=0;
     Account *cur_node;
-	for (auto it=listOfAccount.begin(); it < listOfAccount.end(); it++){
+	for (vector<Account*>::iterator it=listOfAccount.begin(); it < listOfAccount.end(); it++){
 		cur_node=listOfAccount.at(index);
 		if ( (cur_node->getID()) == id){//// the wanted id is found
 			//readUnlockAccount(); //unlocks the account  ////  maybe we are doing it from the outside... check....
