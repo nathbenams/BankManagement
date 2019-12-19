@@ -10,8 +10,9 @@
 
 Protection::Protection() : writerLock(),readerLock(),readerCount(0)
 {
-    writerLock = PTHREAD_MUTEX_INITIALIZER;
-    readerLock = PTHREAD_MUTEX_INITIALIZER;
+    pthread_mutex_init(&writerLock, NULL);
+    pthread_mutex_init(&readerLock, NULL);
+    
 }
 
 Protection::~Protection(){
