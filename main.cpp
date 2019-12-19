@@ -29,7 +29,7 @@ int main(int argc, const char * argv[]) {
         exit(0);
     }
     listOfAccount = ListAccount();
-    Account _bankAccount = Account(BANK,BANK,0);
+    Account _bankAccount = Account(BANK,"BANK",0);
     bankAccount = &_bankAccount;
     active = true;
     log=fopen("log.txt","w");
@@ -45,12 +45,13 @@ int main(int argc, const char * argv[]) {
     
     int numberOfCaspomat = atoi(argv[1]);
     
-    vector<Caspomat> listOfCaspomat;
+    vector<Caspomat*> listOfCaspomat;
     pthread_t listThread[numberOfCaspomat];
     
     for(int i=0; i<numberOfCaspomat;i++){
-        listOfCaspomat.push_back(Caspomat(i+1,argv[i+2]));
-        pthread_create(&listThread[i],NULL,&Caspomat::execute_helper, &listOfCaspomat.at(i));
+        Caspomat* temp=  new Caspomat(i+1,argv[i+2]);
+        listOfCaspomat.push_back(temp);
+        pthread_create(&listThread[i],NULL,Caspomat::execute_helper, listOfCaspomat.at(i));
         
     }
     

@@ -19,7 +19,7 @@ using namespace std;
 class ListAccount
 {
 public:
-   //// ListAccount(); //i think that vector initializes itself, and "protection" has a no parameter builder so the default builder is enough
+    ListAccount(); 
     ~ListAccount();
     int addAccount(int id,char* password,int balance);
     Account* findAccount(int id);

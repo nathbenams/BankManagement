@@ -9,7 +9,10 @@
 #include "listAccount.hpp"
 
 //*************************************************************************************************************************************************//
-
+ListAccount::ListAccount()
+{
+    listOfAccount.clear();
+}
 
 
 //*************************************************************************************************************************************************//
@@ -27,7 +30,7 @@ int ListAccount:: addAccount(int id,char* password,int balance){ //returns 0 for
 	//assuming that the lock is from the user
 	//writeLockAccount();////locks the list! ////  maybe we are doing it from the outside... check....
 	
-	if (! findAccount(id)){// this id already exists for aonther account
+	if ( findAccount(id)){// this id already exists for aonther account
 		
 		return (-1);
 	}
@@ -36,14 +39,17 @@ int ListAccount:: addAccount(int id,char* password,int balance){ //returns 0 for
 	}
 	Account* new_node = new Account(id,password,balance);
 	int inserted=0;
+    vector<Account*>::iterator it = listOfAccount.begin();
     Account* cur_node;
-	for (vector<Account*>::iterator it = listOfAccount.begin(); it < listOfAccount.end(); it++){
-		cur_node= *it;
-		if ( (cur_node->getID()) > id && !inserted){//// the first acoount with a greater id then the new account. this is the right place for the new account
-			listOfAccount.insert(it,new_node);
-			inserted=1;
-		}
-		
+	for (unsigned long index =0; index < listOfAccount.size(); index++){
+		cur_node= listOfAccount.at(index);
+        if(cur_node!=NULL){
+            if ( (cur_node->getID()) > id && !inserted){//// the first acoount with a greater id then the new account. this is the right place for the new account
+                listOfAccount.insert(it,new_node);
+                inserted=1;
+            }
+        }
+        it++;
 	}
 	
 	if (inserted == 0){////the new acoount has a greater id than all the other accounts. the new acoount should be added in the end of the list

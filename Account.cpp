@@ -8,9 +8,11 @@
 
 #include "Account.hpp"
 
-Account:: Account(int id, char* password, int balance){////// i assume that all the validation of the input was done before calling this function
+Account:: Account(int id, const char* password, int balance){////// i assume that all the validation of the input was done before calling this function
 	accountID = id;
-    accountPassword = password;
+    
+    accountPassword = new char[strlen(password)]; 
+    strcpy(accountPassword, password);
     accountBalance = balance;
     accountReaderWriter = Protection();
     ///// do i need to initiaize the lock to be open??YES
@@ -19,6 +21,7 @@ Account:: Account(int id, char* password, int balance){////// i assume that all 
 ////// we assume that lock and unlock are done from outside the module!!! ////
 //////////////////////////////////////////////////////////////////////////////////
 Account:: ~Account(){
+    if(accountPassword!= NULL) delete accountPassword;
 	//while(pthread_mutex_destroy(&accountReaderWriter));///// if this function success, it returns 0 then i put it in a while
 }
 

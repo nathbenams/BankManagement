@@ -13,12 +13,12 @@ extern ListAccount listOfAccount;
 
 Caspomat::Caspomat(int id,const char* _nameFile) : caspomatID(id),caspomatFile(nullptr),fileOpened(false),nameFile(_nameFile)
 {
-    caspomatFile= fopen(nameFile,"r");
+  /*  caspomatFile= fopen(nameFile,"r");
     if(!caspomatFile){
         perror("");
         exit(1);
     }
-    fileOpened=true;
+    fileOpened=true;*/
 }
 
 Caspomat::~Caspomat()
@@ -38,7 +38,17 @@ void* Caspomat::executeCommandCaspomat(void)
     Account* accountTmp;
     Account* accountTmpReceiver;
     usleep(100000);
-    while(fgets(cmd, MAX_LINE_SIZE,caspomatFile) != nullptr){
+    
+    caspomatFile= fopen(nameFile,"r");
+       if(!caspomatFile){
+           perror("");
+           exit(1);
+       }
+       fileOpened=true;
+    
+    
+    while(fgets(cmd, MAX_LINE_SIZE,caspomatFile) != 0){
+        
         command = strtok(cmd,delimiters);
     
         if(command==nullptr) break;

@@ -10,12 +10,13 @@
 #define Account_hpp
 
 #include <stdio.h>
+#include <string.h>
 #include "Protection.hpp"
 
 class Account
 {
 public:
-    Account(int id, char* password, int balance);
+    Account(int id, const char* password, int balance);
     ~Account();
     int getID();
     char* getPassword();
