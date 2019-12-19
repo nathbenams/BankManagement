@@ -22,18 +22,20 @@ void* bankPrint(void *arg){
         printf("\033[1;1H");
         printf("Current Bank Status\n");
         listOfAccount.readLockAccount();
-        for(unsigned long i=0;i<listOfAccount.sizeList();i++){
+      /*  for(unsigned long i=0;i<listOfAccount.sizeList();i++){
             listOfAccount.getAccount(i)->readLockAccount();
-        }
+        }*/
         
         for(unsigned long i=0;i<listOfAccount.sizeList();i++){
+            listOfAccount.getAccount(i)->readLockAccount();
             printf("Account %d: Balance – %d $ , Account Password – %s\n",listOfAccount.getAccount(i)->getID(),listOfAccount.getAccount(i)->getBalance(),listOfAccount.getAccount(i)->getPassword());
+            listOfAccount.getAccount(i)->readUnlockAccount();
         }
         printf("The Bank has %d $",bankAccount->getBalance());
         
-        for(unsigned long i=0;i<listOfAccount.sizeList();i++){
+       /* for(unsigned long i=0;i<listOfAccount.sizeList();i++){
             listOfAccount.getAccount(i)->readUnlockAccount();
-        }
+        }*/
         listOfAccount.readUnlockAccount();
         
 
@@ -48,18 +50,18 @@ void* bankCommission(void* arg){
     while (active) {
         
         sleep(3);
-        int commission = rand()%INTERVAL + INTERVAL;
+        int commission = (rand()%3) + INTERVAL;
         listOfAccount.readLockAccount();
-        for(unsigned long i=0;i<listOfAccount.sizeList();i++){
+      /*  for(unsigned long i=0;i<listOfAccount.sizeList();i++){
             listOfAccount.getAccount(i)->writeLockAccount();
-        }
+        }*/
         int commissionAccount;
         Account* accountTmp;
         for(unsigned long i=0;i<listOfAccount.sizeList();i++){
             
             accountTmp = listOfAccount.getAccount(i);
-            
-            commissionAccount = (int)(accountTmp->getBalance() *(commission/100));
+            accountTmp->writeLockAccount();
+            commissionAccount = (int)(accountTmp->getBalance() *(((double)commission)/100));
             
             bankAccount->writeLockAccount();
             

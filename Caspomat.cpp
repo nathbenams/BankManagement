@@ -30,11 +30,11 @@ Caspomat::~Caspomat()
 
 void* Caspomat::executeCommandCaspomat(void)
 {
-    char cmd[MAX_LINE_SIZE];
+    char origin_cmd[MAX_LINE_SIZE];
     char* command;
     char* args[MAX_ARG];
     const char* delimiters = " ";
-    int num_arg = 0;
+    
     Account* accountTmp;
     Account* accountTmpReceiver;
     usleep(100000);
@@ -47,20 +47,25 @@ void* Caspomat::executeCommandCaspomat(void)
        fileOpened=true;
     
     
-    while(fgets(cmd, MAX_LINE_SIZE,caspomatFile) != 0){
-        
-        command = strtok(cmd,delimiters);
+    while(fgets(origin_cmd, MAX_LINE_SIZE,caspomatFile) != NULL){
+        char cmd[MAX_LINE_SIZE];
+        char* temp;
+        strcpy(cmd,origin_cmd);
+        cmd[strlen(origin_cmd)-1]='\0';
+        command = strtok_r(cmd,delimiters,&temp);
     
-        if(command==nullptr) break;
+        if(command==NULL) break;
         int accountID;
         char* accountPassword;
+        
+        
         for(int i = 0;i<MAX_ARG;i++){
-            args[i]=strtok(nullptr,delimiters);
-            if(args[i]!=nullptr){
-                num_arg++;
-            }
+            args[i]=strtok_r(NULL,delimiters,&temp);
+            
         }
+        
         accountID = atoi(args[0]);
+        
         accountPassword = args[1];
         int amount,accountReceiverID;
         
@@ -75,6 +80,8 @@ void* Caspomat::executeCommandCaspomat(void)
             }
             sleep(1);
             listOfAccount.writeUnlockAccount();
+            origin_cmd[0]='\0';
+            cmd[0]='\0';
             continue;
         }
         
@@ -88,6 +95,7 @@ void* Caspomat::executeCommandCaspomat(void)
             }
             else if(strcmp(accountTmp->getPassword(),accountPassword)){
                fprintf(log, "Error %d: Your transaction failed - password for account id %d is incorrect\n", caspomatID, accountID);
+
             }
             else{
                 amount = atoi(args[2]);
@@ -97,6 +105,8 @@ void* Caspomat::executeCommandCaspomat(void)
                 sleep(1);
                 accountTmp->writeUnlockAccount();
             }
+            origin_cmd[0]='\0';
+            cmd[0]='\0';
             continue;
         }
         
@@ -116,13 +126,17 @@ void* Caspomat::executeCommandCaspomat(void)
                 accountTmp->writeLockAccount();
                 if(accountTmp->takeMoney(amount)){
                     fprintf(log, "%d: Account %d new balance is %d after %d $ was withdrew\n", caspomatID, accountID, accountTmp->getBalance(), amount);
+                   
                 }
                 else{
                     fprintf(log, "Error %d: Your transaction failed - account id %d balance is lower than %d\n", caspomatID, accountID, amount);
+                    
                 }
                 sleep(1);
                 accountTmp->writeUnlockAccount();
             }
+            origin_cmd[0]='\0';
+            cmd[0]='\0';
             continue;
         }
         
@@ -133,6 +147,7 @@ void* Caspomat::executeCommandCaspomat(void)
             listOfAccount.readUnlockAccount();
             if (accountTmp == NULL) {
             fprintf(log,"Error %d: Your transaction failed - account id %d does not exist\n",caspomatID, accountID );
+                
             }
             else if(strcmp(accountTmp->getPassword(),accountPassword)){
                fprintf(log, "Error %d: Your transaction failed - password for account id %d is incorrect\n", caspomatID, accountID);
@@ -143,6 +158,8 @@ void* Caspomat::executeCommandCaspomat(void)
                 sleep(1);
                 accountTmp->readUnlockAccount();
             }
+            origin_cmd[0]='\0';
+            cmd[0]='\0';
             continue;
         }
         
@@ -150,10 +167,12 @@ void* Caspomat::executeCommandCaspomat(void)
         else if(!strcmp(command,"T")){
             accountReceiverID = atoi(args[2]);
             amount = atoi(args[3]);
+            if(accountID==accountReceiverID) continue;
             listOfAccount.readLockAccount();
             accountTmp = listOfAccount.findAccount(accountID);
             accountTmpReceiver = listOfAccount.findAccount(accountReceiverID);
             listOfAccount.readUnlockAccount();
+            
             if (accountTmp == NULL) {
             fprintf(log,"Error %d: Your transaction failed - account id %d does not exist\n",caspomatID, accountID );
             }
@@ -164,8 +183,15 @@ void* Caspomat::executeCommandCaspomat(void)
                fprintf(log, "Error %d: Your transaction failed - password for account id %d is incorrect\n", caspomatID, accountID);
             }
             else{
+                
+                
+                listOfAccount.writeLockAccount();
                 accountTmp->writeLockAccount();
+              //  listOfAccount.writeUnlockAccount();
+                
+              //  listOfAccount.writeLockAccount();
                 accountTmpReceiver->writeLockAccount();
+                listOfAccount.writeUnlockAccount();
                 if(accountTmp->takeMoney(amount)){
                     accountTmpReceiver->addMoney(amount);
                     fprintf(log, "%d: Transfer %d from account %d to account %d new account balance is %d new target account balance is %d\n", caspomatID, amount, accountID, accountReceiverID, accountTmp->getBalance(), accountTmpReceiver->getBalance());
@@ -178,6 +204,8 @@ void* Caspomat::executeCommandCaspomat(void)
                 accountTmpReceiver->writeUnlockAccount();
                 
             }
+            origin_cmd[0]='\0';
+            cmd[0]='\0';
             continue;
         }
         
@@ -186,6 +214,9 @@ void* Caspomat::executeCommandCaspomat(void)
             perror("Illegal command");
             exit(1);
         }
+        
+        
+        
     }
     return NULL;
 }

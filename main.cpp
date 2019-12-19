@@ -23,7 +23,7 @@ Account* bankAccount;
 
 int main(int argc, const char * argv[]) {
     
-    if (argc < 3 || atoi(argv[1]) != argc - 2)
+   if (argc < 3 || atoi(argv[1]) != argc - 2)
     {
         printf("illegal arguments\n");
         exit(0);
@@ -66,5 +66,7 @@ int main(int argc, const char * argv[]) {
     
     //pthread_join of the banks
     fclose(log);
+    
+    
     return 0;
 }

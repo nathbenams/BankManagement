@@ -22,7 +22,7 @@ using namespace std;
 #include "Account.hpp"
 #include "listAccount.hpp"
 #define MAX_LINE_SIZE 100
-#define MAX_ARG 5
+#define MAX_ARG 4
 
 
 class Caspomat
