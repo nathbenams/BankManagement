@@ -11,14 +11,9 @@
 extern FILE* log;
 extern ListAccount listOfAccount;
 
-Caspomat::Caspomat(int id,const char* _nameFile) : caspomatID(id),caspomatFile(nullptr),fileOpened(false),nameFile(_nameFile)
+Caspomat::Caspomat(int id,const char* _nameFile) : caspomatID(id),caspomatFile(NULL),fileOpened(false),nameFile(_nameFile)
 {
-  /*  caspomatFile= fopen(nameFile,"r");
-    if(!caspomatFile){
-        perror("");
-        exit(1);
-    }
-    fileOpened=true;*/
+ 
 }
 
 Caspomat::~Caspomat()
@@ -28,6 +23,12 @@ Caspomat::~Caspomat()
     }
 }
 
+//********************************************
+// function name: executeCommandCaspomat
+// Description: the main function of the ATMs that read the file and execute the commands
+// Parameters:
+// Returns:
+//********************************************
 void* Caspomat::executeCommandCaspomat(void)
 {
     char origin_cmd[MAX_LINE_SIZE];
@@ -187,9 +188,7 @@ void* Caspomat::executeCommandCaspomat(void)
                 
                 listOfAccount.writeLockAccount();
                 accountTmp->writeLockAccount();
-              //  listOfAccount.writeUnlockAccount();
-                
-              //  listOfAccount.writeLockAccount();
+
                 accountTmpReceiver->writeLockAccount();
                 listOfAccount.writeUnlockAccount();
                 if(accountTmp->takeMoney(amount)){

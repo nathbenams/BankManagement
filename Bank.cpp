@@ -13,7 +13,13 @@ extern bool active;
 extern ListAccount listOfAccount;
 extern Account* bankAccount;
 extern FILE* log;
-
+//********************************************
+// function name: bankPrint
+// Description: the main function of the bankPrint thread, print on the
+//              screen the status of the accounts
+// Parameters:
+// Returns:
+//********************************************
 void* bankPrint(void *arg){
     
     while(active){
@@ -44,7 +50,13 @@ void* bankPrint(void *arg){
     
     return NULL;
 }
-
+//********************************************
+// function name: bankCommission
+// Description: the main function of the commission thread, wich
+//              all 3 seconds take a % of the accounts
+// Parameters:
+// Returns:
+//********************************************
 void* bankCommission(void* arg){
     
     while (active) {

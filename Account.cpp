@@ -15,14 +15,10 @@ Account:: Account(int id, const char* password, int balance){////// i assume tha
     strcpy(accountPassword, password);
     accountBalance = balance;
     accountReaderWriter = Protection();
-    ///// do i need to initiaize the lock to be open??YES
 }
 
-////// we assume that lock and unlock are done from outside the module!!! ////
-//////////////////////////////////////////////////////////////////////////////////
 Account:: ~Account(){
     if(accountPassword!= NULL) delete accountPassword;
-	//while(pthread_mutex_destroy(&accountReaderWriter));///// if this function success, it returns 0 then i put it in a while
 }
 
 int Account:: getID(){
@@ -37,28 +33,60 @@ char* Account:: getPassword(){
 int Account:: getBalance(){
 	return(accountBalance);
 }
-
+//********************************************
+// function name: takeMoney
+// Description: remove the amount off the account's balance
+// Parameters: amount to remove
+// Returns: true if success, false if the account's balance smaller than the amount
+//********************************************
 bool Account:: takeMoney(int amount){
 	if (accountBalance < amount)
 		return false;
 	accountBalance-=amount;
 	return true;
 }
-
+//********************************************
+// function name: addMoney
+// Description: add the amount to the account's balance
+// Parameters: amount to add
+// Returns:
+//********************************************
 void Account:: addMoney(int amount){////// assumes that amount is not negitive
 		accountBalance+=amount;
 }
-
+//********************************************
+// function name: readLockAccount
+// Description: lock the reader's locker of the account
+// Parameters:
+// Returns:
+//********************************************
 void Account::readLockAccount(){
 	accountReaderWriter.enterReader();
 }
+//********************************************
+// function name: readUnlockAccount
+// Description: Unlock the account reader's locker
+// Parameters:
+// Returns:
+//********************************************
 void Account::readUnlockAccount(){
 	accountReaderWriter.leaveReader();
 }
+//********************************************
+// function name: writeLockAccount
+// Description: Lock the account writer's locker
+// Parameters:
+// Returns:
+//********************************************
 void Account::writeLockAccount(){
 	accountReaderWriter.enterWriter();
 }
-
+//********************************************
+// function name: writeUnlockAccount
+// Description: unlock the writer's locker of the account
+// Parameters:
+// Returns:
+//********************************************
 void Account::writeUnlockAccount(){
 	accountReaderWriter.leaveWriter();
 }
